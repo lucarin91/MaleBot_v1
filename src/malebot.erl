@@ -1,13 +1,19 @@
 -module(malebot).
-
--export([start/0]).
+-behaviour(application).
+-export([start/2, stop/1]).
+% -export([start/0]).
 
 -include("token.hrl").
 -define(BASE_URL, "https://api.telegram.org/bot" ++ ?TOKEN).
 -define(GET_COMMAND_URL, ?BASE_URL ++ "/getUpdates?offset=").
 -define(SET_COMMAND_URL, ?BASE_URL ++ "/sendMessage").
 
-start() ->
+stop(_State) ->
+    ok.
+
+start(_Type, _Args) ->
+  % ch_sup:start_link().
+
   io:format("---Start bot---~n"),
   inets:start(),
   ssl:start(),
@@ -16,7 +22,7 @@ start() ->
   Words = read_words(IoDevice, []),
   file:close(IoDevice),
 
-  command_handler(?GET_COMMAND_URL, 0, Words).
+  spawn(command_handler(?GET_COMMAND_URL, 0, Words)).
 
 read_words(IoDevice, Words) ->
   case file:read_line(IoDevice) of
