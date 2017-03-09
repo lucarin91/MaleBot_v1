@@ -1,6 +1,6 @@
 -module(malebot).
 
--export([start/0]).
+-export([start/0, stop/0]).
 
 -import(bsearch,[search_word/2,get_word_list/0]).
 
@@ -81,7 +81,7 @@ parse_message(Message) ->
   end.
 
 
-terminate() ->
+stop() ->
   ssl:stop(),
   inets:stop().
 
