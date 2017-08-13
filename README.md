@@ -10,7 +10,7 @@ To get the token follow the instructions here [how-do-i-create-a-bot] (https://c
 
 ### Run:
 ```
-./start_bot.sh
+./startd.sh
 ```
 
 ### Technology:
